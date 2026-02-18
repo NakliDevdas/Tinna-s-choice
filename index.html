@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+    🌸 Cozy Pastel Feminine Ecommerce Prototype (Single File)
+    - Pure HTML + CSS + Minimal JS
+    - Responsive layout
+    - Wishlist toggle animation
+    - Add to cart interactions
+    - Cart modal + checkout simulation
+  -->
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SoftCare Pads | Cozy Feminine Store</title>
+
+  <!-- Google Font (clean + premium + soft) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ------------------------------
+       🌸 GLOBAL RESET + VARIABLES
+    ------------------------------ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Quicksand", sans-serif;
+    }
+
+    :root {
+      --blush: #ffd6e8;
+      --lavender: #e8dcff;
+      --teal: #d6f6f2;
+      --soft-white: #fffafc;
+      --pink: #ff8bbd;
+      --pink-dark: #ff5fa7;
+      --purple: #b59bff;
+      --text: #3a2f3d;
+      --muted: rgba(58, 47, 61, 0.7);
+      --card: rgba(255, 255, 255, 0.75);
+      --shadow: 0 10px 25px rgba(120, 70, 100, 0.15);
+      --shadow-soft: 0 6px 18px rgba(120, 70, 100, 0.12);
+      --radius: 18px;
+    }
+
+    body {
+      background: linear-gradient(180deg, #fff6fb, #f7fbff);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    /* ------------------------------
+       🌸 NAVBAR
+    ------------------------------ */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(200, 170, 200, 0.25);
+      padding: 14px 20px;
+    }
+
+    .nav-wrap {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.2px;
+    }
+
+    .logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blush), var(--lavender), var(--teal));
+      box-shadow: var(--shadow-soft);
+      position: relative;
+    }
+
+    .logo::after {
+      content: "💗";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-weight: 600;
+      color: rgba(58, 47, 61, 0.85);
+    }
+
+    .nav-links a:hover {
+      color: var(--pink-dark);
+    }
+
+    .cart-btn {
+      position: relative;
+      background: white;
+      border-radius: 999px;
+      padding: 10px 14px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+      color: white;
+      font-size: 0.8rem;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 6px 14px rgba(255, 95, 167, 0.35);
+      font-weight: 800;
+    }
+
+    /* ------------------------------
+       🌸 HERO SECTION
+    ------------------------------ */
+    .hero {
+      width: 100%;
+      padding: 70px 20px 60px;
+      background: linear-gradient(120deg, var(--blush), var(--lavender), var(--teal));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-wrap {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      line-height: 1.1;
+      font-weight: 800;
+      color: #3b2b3e;
+      text-shadow: 0 4px 20px rgba(255, 255, 255, 0.6);
+    }
+
+    .hero p {
+      margin-top: 14px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: rgba(58, 47, 61, 0.8);
+      max-width: 520px;
+    }
+
+    .hero-actions {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .primary-btn {
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+      color: white;
+      font-weight: 800;
+      box-shadow: 0 12px 28px rgba(255, 95, 167, 0.25);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(255, 95, 167, 0.3);
+    }
+
+    .secondary-btn {
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      font-weight: 800;
+      color: var(--text);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .secondary-btn:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: translateY(-2px);
+    }
+
+    /* Right hero card */
+    .hero-card {
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .hero-card h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .hero-card p {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: rgba(58, 47, 61, 0.75);
+    }
+
+    .mini-points {
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini-point {
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 20px rgba(120, 70, 100, 0.08);
+    }
+
+    /* Floating decorative elements */
+    .float-item {
+      position: absolute;
+      opacity: 0.75;
+      filter: blur(0.2px);
+      animation: floaty 6s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    .float-item:nth-child(1) {
+      top: 18%;
+      left: 8%;
+      font-size: 2.2rem;
+      animation-duration: 7s;
+    }
+
+    .float-item:nth-child(2) {
+      top: 55%;
+      left: 12%;
+      font-size: 2.5rem;
+      animation-duration: 8s;
+    }
+
+    .float-item:nth-child(3) {
+      top: 20%;
+      right: 12%;
+      font-size: 2.3rem;
+      animation-duration: 6.5s;
+    }
+
+    .float-item:nth-child(4) {
+      top: 70%;
+      right: 18%;
+      font-size: 2.4rem;
+      animation-duration: 9s;
+    }
+
+    .float-item:nth-child(5) {
+      top: 40%;
+      right: 40%;
+      font-size: 2rem;
+      animation-duration: 7.5s;
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0px) translateX(0px); }
+      50% { transform: translateY(-18px) translateX(10px); }
+    }
+
+    /* ------------------------------
+       🌸 PRODUCT SECTION
+    ------------------------------ */
+    .section {
+      padding: 60px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 26px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .product-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      transition: 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .product-img {
+      width: 100%;
+      height: 160px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255, 214, 232, 0.9), rgba(232, 220, 255, 0.85), rgba(214, 246, 242, 0.85));
+      display: grid;
+      place-items: center;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: rgba(58, 47, 61, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Soft sparkle overlay */
+    .product-img::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.7), transparent 50%),
+                  radial-gradient(circle at 80% 30%, rgba(255,255,255,0.5), transparent 55%),
+                  radial-gradient(circle at 40% 80%, rgba(255,255,255,0.5), transparent 60%);
+      opacity: 0.8;
+    }
+
+    .product-content {
+      margin-top: 12px;
+    }
+
+    .product-name {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .product-tagline {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: rgba(58, 47, 61, 0.75);
+      margin-bottom: 10px;
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-weight: 800;
+    }
+
+    .price {
+      font-size: 1.1rem;
+      color: var(--pink-dark);
+    }
+
+    .qty {
+      font-size: 0.9rem;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 6px 10px;
+      border-radius: 999px;
+      box-shadow: 0 6px 14px rgba(120, 70, 100, 0.08);
+      color: rgba(58, 47, 61, 0.8);
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .add-btn {
+      flex: 1;
+      padding: 12px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.8);
+      font-weight: 900;
+      color: rgba(58, 47, 61, 0.85);
+      box-shadow: 0 8px 18px rgba(120, 70, 100, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .add-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Added state */
+    .add-btn.added {
+      background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+      color: white;
+      border: none;
+      box-shadow: 0 14px 26px rgba(255, 95, 167, 0.25);
+    }
+
+    .wishlist-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.8);
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+      box-shadow: 0 8px 18px rgba(120, 70, 100, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      user-select: none;
+    }
+
+    .wishlist-btn.active {
+      background: rgba(255, 214, 232, 0.85);
+      border: 1px solid rgba(255, 140, 190, 0.3);
+      transform: scale(1.05);
+    }
+
+    /* Heart click animation */
+    .wishlist-btn.bounce {
+      animation: pop 0.3s ease;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.25); }
+      100% { transform: scale(1.05); }
+    }
+
+    .go-cart {
+      margin-top: 12px;
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.8);
+      font-weight: 900;
+      color: var(--text);
+      box-shadow: var(--shadow-soft);
+      display: none;
+    }
+
+    .go-cart.show {
+      display: block;
+    }
+
+    .go-cart:hover {
+      background: rgba(255, 255, 255, 0.95);
+      transform: translateY(-2px);
+    }
+
+    /* ------------------------------
+       🌸 CART MODAL
+    ------------------------------ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(40, 20, 35, 0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 980px;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 22px;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .modal-header {
+      padding: 16px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(180, 140, 170, 0.25);
+      background: linear-gradient(120deg, rgba(255, 214, 232, 0.5), rgba(232, 220, 255, 0.5), rgba(214, 246, 242, 0.5));
+    }
+
+    .modal-header h2 {
+      font-size: 1.3rem;
+      font-weight: 900;
+    }
+
+    .close-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: var(--shadow-soft);
+      font-size: 1.2rem;
+      font-weight: 900;
+      display: grid;
+      place-items: center;
+    }
+
+    .modal-body {
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    /* Cart list */
+    .cart-box {
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      min-height: 260px;
+    }
+
+    .cart-box h3 {
+      font-size: 1.1rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .cart-items {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 6px 16px rgba(120, 70, 100, 0.08);
+    }
+
+    .cart-item-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .cart-item-name {
+      font-weight: 900;
+      font-size: 0.95rem;
+    }
+
+    .cart-item-price {
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: rgba(58, 47, 61, 0.7);
+    }
+
+    .remove-btn {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 900;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 6px 14px rgba(120, 70, 100, 0.08);
+      color: rgba(58, 47, 61, 0.85);
+    }
+
+    .remove-btn:hover {
+      background: rgba(255, 220, 235, 0.85);
+      color: var(--pink-dark);
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(150, 110, 140, 0.3);
+      font-weight: 900;
+      font-size: 1rem;
+    }
+
+    .total-row span:last-child {
+      color: var(--pink-dark);
+      font-size: 1.1rem;
+    }
+
+    /* Checkout form */
+    .checkout-box {
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .checkout-box h3 {
+      font-size: 1.1rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .form-row {
+      display: grid;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: rgba(58, 47, 61, 0.8);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(180, 140, 170, 0.25);
+      outline: none;
+      background: rgba(255, 255, 255, 0.85);
+      font-weight: 700;
+      color: rgba(58, 47, 61, 0.9);
+      box-shadow: 0 6px 16px rgba(120, 70, 100, 0.05);
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: none;
+    }
+
+    input:focus, textarea:focus {
+      border: 1px solid rgba(255, 95, 167, 0.4);
+      box-shadow: 0 10px 22px rgba(255, 95, 167, 0.12);
+    }
+
+    .payment-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(180, 140, 170, 0.2);
+    }
+
+    .payment-options label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .place-order {
+      margin-top: 12px;
+      width: 100%;
+      padding: 13px 12px;
+      border-radius: 999px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+      color: white;
+      box-shadow: 0 16px 30px rgba(255, 95, 167, 0.25);
+    }
+
+    .place-order:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 36px rgba(255, 95, 167, 0.3);
+    }
+
+    .order-message {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(214, 246, 242, 0.65);
+      border: 1px solid rgba(120, 200, 190, 0.25);
+      font-weight: 900;
+      color: rgba(58, 47, 61, 0.9);
+      display: none;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .order-message.show {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ------------------------------
+       🌸 FOOTER
+    ------------------------------ */
+    footer {
+      padding: 28px 20px;
+      text-align: center;
+      color: rgba(58, 47, 61, 0.7);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    /* ------------------------------
+       🌸 RESPONSIVE
+    ------------------------------ */
+    @media (max-width: 950px) {
+      .hero-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .modal-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero {
+        padding: 60px 18px 55px;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🌸 NAVBAR -->
+  <header class="navbar">
+    <div class="nav-wrap">
+      <div class="brand">
+        <div class="logo"></div>
+        <span>SoftCare</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#products">Shop</a>
+        <a href="#about">Why Us</a>
+        <a href="#support">Support</a>
+      </nav>
+
+      <button class="cart-btn" onclick="openCart()">
+        🛒 Cart
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 🌸 HERO SECTION -->
+  <section class="hero">
+    <!-- Floating subtle elements -->
+    <div class="float-item">☁️</div>
+    <div class="float-item">💗</div>
+    <div class="float-item">✨</div>
+    <div class="float-item">🌸</div>
+    <div class="float-item">💫</div>
+
+    <div class="hero-wrap">
+      <div>
+        <h1>Growing With You. Every Month. Every Mood.</h1>
+        <p>From first period to fearless woman.</p>
+
+        <div class="hero-actions">
+          <a href="#products" class="primary-btn">Shop Soft Comfort</a>
+          <button class="secondary-btn" onclick="openCart()">Go to Cart</button>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <h3>Comfort isn’t a luxury.</h3>
+        <p>
+          It’s support, softness, and the kind of care you deserve—
+          even on your worst days.
+        </p>
+
+        <div class="mini-points">
+          <div class="mini-point">🌷 Ultra-soft feel</div>
+          <div class="mini-point">✨ Breathable + light</div>
+          <div class="mini-point">💗 Made for real moods</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🌸 PRODUCT SECTION -->
+  <section class="section" id="products">
+    <div class="container">
+      <h2 class="section-title">Choose Your Comfort Pack</h2>
+      <p class="section-subtitle">
+        Soft pastel protection that feels like a hug. Clean, safe, and confidence-first.
+      </p>
+
+      <div class="product-grid">
+
+        <!-- Product 1 -->
+        <div class="product-card" data-id="1" data-name="Blush Comfort Pads" data-price="149">
+          <div class="product-img">PACK</div>
+          <div class="product-content">
+            <div class="product-name">Blush Comfort Pads</div>
+            <div class="product-tagline">For calm days and cozy confidence.</div>
+
+            <div class="product-meta">
+              <div class="price">₹149</div>
+              <div class="qty">8 pads</div>
+            </div>
+
+            <div class="product-actions">
+              <button class="add-btn" onclick="addToCart(this)">Add to Cart</button>
+              <button class="wishlist-btn" onclick="toggleWishlist(this)">♡</button>
+            </div>
+
+            <button class="go-cart" onclick="openCart()">Go to Cart</button>
+          </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card" data-id="2" data-name="Lavender Night Guard" data-price="199">
+          <div class="product-img">PACK</div>
+          <div class="product-content">
+            <div class="product-name">Lavender Night Guard</div>
+            <div class="product-tagline">Sleep softly. Wake up fearless.</div>
+
+            <div class="product-meta">
+              <div class="price">₹199</div>
+              <div class="qty">10 pads</div>
+            </div>
+
+            <div class="product-actions">
+              <button class="add-btn" onclick="addToCart(this)">Add to Cart</button>
+              <button class="wishlist-btn" onclick="toggleWishlist(this)">♡</button>
+            </div>
+
+            <button class="go-cart" onclick="openCart()">Go to Cart</button>
+          </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card" data-id="3" data-name="Teal Fresh Flow" data-price="179">
+          <div class="product-img">PACK</div>
+          <div class="product-content">
+            <div class="product-name">Teal Fresh Flow</div>
+            <div class="product-tagline">Light, airy, and always ready.</div>
+
+            <div class="product-meta">
+              <div class="price">₹179</div>
+              <div class="qty">8 pads</div>
+            </div>
+
+            <div class="product-actions">
+              <button class="add-btn" onclick="addToCart(this)">Add to Cart</button>
+              <button class="wishlist-btn" onclick="toggleWishlist(this)">♡</button>
+            </div>
+
+            <button class="go-cart" onclick="openCart()">Go to Cart</button>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card" data-id="4" data-name="Cloud Soft Starter Pack" data-price="149">
+          <div class="product-img">PACK</div>
+          <div class="product-content">
+            <div class="product-name">Cloud Soft Starter Pack</div>
+            <div class="product-tagline">Perfect for first periods & first confidence.</div>
+
+            <div class="product-meta">
+              <div class="price">₹149</div>
+              <div class="qty">8 pads</div>
+            </div>
+
+            <div class="product-actions">
+              <button class="add-btn" onclick="addToCart(this)">Add to Cart</button>
+              <button class="wishlist-btn" onclick="toggleWishlist(this)">♡</button>
+            </div>
+
+            <button class="go-cart" onclick="openCart()">Go to Cart</button>
+          </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card" data-id="5" data-name="Sparkle Active Shield" data-price="249">
+          <div class="product-img">PACK</div>
+          <div class="product-content">
+            <div class="product-name">Sparkle Active Shield</div>
+            <div class="product-tagline">Move freely. No stress, no leaks.</div>
+
+            <div class="product-meta">
+              <div class="price">₹249</div>
+              <div class="qty">10 pads</div>
+            </div>
+
+            <div class="product-actions">
+              <button class="add-btn" onclick="addToCart(this)">Add to Cart</button>
+              <button class="wishlist-btn" onclick="toggleWishlist(this)">♡</button>
+            </div>
+
+            <button class="go-cart" onclick="openCart()">Go to Cart</button>
+          </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card" data-id="6" data-name="Rose Ultra Care" data-price="199">
+          <div class="product-img">PACK</div>
+          <div class="product-content">
+            <div class="product-name">Rose Ultra Care</div>
+            <div class="product-tagline">Soft protection for strong girls.</div>
+
+            <div class="product-meta">
+              <div class="price">₹199</div>
+              <div class="qty">8 pads</div>
+            </div>
+
+            <div class="product-actions">
+              <button class="add-btn" onclick="addToCart(this)">Add to Cart</button>
+              <button class="wishlist-btn" onclick="toggleWishlist(this)">♡</button>
+            </div>
+
+            <button class="go-cart" onclick="openCart()">Go to Cart</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 🌸 ABOUT SUPPORT SECTION (extra but clean + useful) -->
+  <section class="section" id="about">
+    <div class="container">
+      <h2 class="section-title">Why SoftCare?</h2>
+      <p class="section-subtitle">
+        Because your body deserves softness, and your mind deserves peace.
+      </p>
+
+      <div style="
+        display:grid;
+        grid-template-columns: repeat(3,1fr);
+        gap:16px;
+      " class="why-grid">
+
+        <div style="background:rgba(255,255,255,0.75); padding:16px; border-radius:18px; box-shadow:var(--shadow-soft);">
+          <div style="font-size:1.6rem;">🌸</div>
+          <h3 style="font-weight:900; margin-top:8px;">Comfort-first design</h3>
+          <p style="margin-top:6px; font-weight:700; color:rgba(58,47,61,0.75);">
+            No harsh feel. No discomfort. Just soft support that blends into your day.
+          </p>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.75); padding:16px; border-radius:18px; box-shadow:var(--shadow-soft);">
+          <div style="font-size:1.6rem;">✨</div>
+          <h3 style="font-weight:900; margin-top:8px;">Made for real moods</h3>
+          <p style="margin-top:6px; font-weight:700; color:rgba(58,47,61,0.75);">
+            From anxious mornings to busy nights—your protection stays steady.
+          </p>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.75); padding:16px; border-radius:18px; box-shadow:var(--shadow-soft);">
+          <div style="font-size:1.6rem;">💗</div>
+          <h3 style="font-weight:900; margin-top:8px;">Confidence in every pack</h3>
+          <p style="margin-top:6px; font-weight:700; color:rgba(58,47,61,0.75);">
+            Not just pads—care that feels safe, empowering, and supportive.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 🌸 FOOTER -->
+  <footer id="support">
+    SoftCare Prototype Store 🌷 | Designed with comfort-first energy 💗
+  </footer>
+
+  <!-- 🌸 CART MODAL -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal">
+
+      <div class="modal-header">
+        <h2>Checkout Your Comfort 💗</h2>
+        <button class="close-btn" onclick="closeCart()">✕</button>
+      </div>
+
+      <div class="modal-body">
+
+        <!-- CART ITEMS -->
+        <div class="cart-box">
+          <h3>Your Cart</h3>
+
+          <div class="cart-items" id="cartItems">
+            <!-- JS injects items -->
+          </div>
+
+          <div class="total-row">
+            <span>Total</span>
+            <span id="cartTotal">₹0</span>
+          </div>
+        </div>
+
+        <!-- CHECKOUT FORM -->
+        <div class="checkout-box">
+          <h3>Delivery Details</h3>
+
+          <form id="checkoutForm" onsubmit="placeOrder(event)">
+            <div class="form-grid">
+
+              <div class="form-row">
+                <label>Full Name</label>
+                <input type="text" id="fullName" placeholder="Your name" required>
+              </div>
+
+              <div class="form-row">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="you@example.com" required>
+              </div>
+
+              <div class="form-row">
+                <label>Phone</label>
+                <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" required>
+              </div>
+
+              <div class="form-row">
+                <label>Address</label>
+                <textarea id="address" placeholder="House no, street, city..." required></textarea>
+              </div>
+
+              <div class="form-row">
+                <label>Zipcode</label>
+                <input type="text" id="zipcode" placeholder="000000" required>
+              </div>
+
+              <div class="form-row">
+                <label>Payment Method</label>
+                <div class="payment-options">
+                  <label><input type="radio" name="payment" value="cod" required> Pay on Delivery</label>
+                  <label><input type="radio" name="payment" value="upi"> UPI</label>
+                  <label><input type="radio" name="payment" value="bank"> Bank Transfer</label>
+                </div>
+              </div>
+
+            </div>
+
+            <button class="place-order" type="submit">Place Order</button>
+
+            <div class="order-message" id="orderMessage">
+              Your care is on its way 💗 <br>
+              Thank you for choosing confidence.
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 🌸 JAVASCRIPT (Minimal, Clean) -->
+  <script>
+    /*
+      Cart Data Structure:
+      cart = [
+        { id: "1", name: "Blush Comfort Pads", price: 149, qty: 1 }
+      ]
+    */
+    let cart = [];
+
+    const cartCount = document.getElementById("cartCount");
+    const cartItemsDiv = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+    const cartModal = document.getElementById("cartModal");
+    const orderMessage = document.getElementById("orderMessage");
+
+    // -----------------------------
+    // 🌸 Wishlist Toggle
+    // -----------------------------
+    function toggleWishlist(btn) {
+      btn.classList.toggle("active");
+      btn.classList.add("bounce");
+
+      // Toggle icon
+      if (btn.classList.contains("active")) {
+        btn.innerHTML = "♥";
+      } else {
+        btn.innerHTML = "♡";
+      }
+
+      // Remove bounce after animation
+      setTimeout(() => btn.classList.remove("bounce"), 250);
+    }
+
+    // -----------------------------
+    // 🌸 Add to Cart Function
+    // -----------------------------
+    function addToCart(button) {
+      const card = button.closest(".product-card");
+      const id = card.dataset.id;
+      const name = card.dataset.name;
+      const price = parseInt(card.dataset.price);
+
+      // If already in cart, do nothing (prototype logic)
+      const exists = cart.find(item => item.id === id);
+      if (!exists) {
+        cart.push({ id, name, price, qty: 1 });
+      }
+
+      // Update button state
+      button.classList.add("added");
+      button.innerText = "Added";
+
+      // Show "Go to Cart" button
+      const goCartBtn = card.querySelector(".go-cart");
+      goCartBtn.classList.add("show");
+
+      updateCartUI();
+    }
+
+    // -----------------------------
+    // 🌸 Update Cart UI
+    // -----------------------------
+    function updateCartUI() {
+      // Update cart count
+      cartCount.innerText = cart.length;
+
+      // Clear cart items
+      cartItemsDiv.innerHTML = "";
+
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartItemsDiv.innerHTML = `
+          <div style="
+            padding:14px;
+            border-radius:14px;
+            background:rgba(255,255,255,0.7);
+            font-weight:800;
+            color:rgba(58,47,61,0.7);
+            text-align:center;
+            box-shadow:0 6px 16px rgba(120,70,100,0.08);
+          ">
+            Your cart is empty 🌷
+          </div>
+        `;
+      }
+
+      cart.forEach(item => {
+        total += item.price * item.qty;
+
+        cartItemsDiv.innerHTML += `
+          <div class="cart-item">
+            <div class="cart-item-left">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-price">₹${item.price}</div>
+            </div>
+            <button class="remove-btn" onclick="removeFromCart('${item.id}')">Remove</button>
+          </div>
+        `;
+      });
+
+      cartTotal.innerText = "₹" + total;
+    }
+
+    // -----------------------------
+    // 🌸 Remove From Cart
+    // -----------------------------
+    function removeFromCart(id) {
+      cart = cart.filter(item => item.id !== id);
+
+      // Reset product card buttons if removed
+      const productCard = document.querySelector(`.product-card[data-id="${id}"]`);
+      if (productCard) {
+        const addBtn = productCard.querySelector(".add-btn");
+        const goCartBtn = productCard.querySelector(".go-cart");
+
+        addBtn.classList.remove("added");
+        addBtn.innerText = "Add to Cart";
+        goCartBtn.classList.remove("show");
+      }
+
+      updateCartUI();
+    }
+
+    // -----------------------------
+    // 🌸 Open Cart Modal
+    // -----------------------------
+    function openCart() {
+      cartModal.classList.add("active");
+      updateCartUI();
+    }
+
+    // -----------------------------
+    // 🌸 Close Cart Modal
+    // -----------------------------
+    function closeCart() {
+      cartModal.classList.remove("active");
+      orderMessage.classList.remove("show");
+    }
+
+    // Close modal if clicked outside the box
+    cartModal.addEventListener("click", (e) => {
+      if (e.target === cartModal) {
+        closeCart();
+      }
+    });
+
+    // -----------------------------
+    // 🌸 Place Order Simulation
+    // -----------------------------
+    function placeOrder(event) {
+      event.preventDefault();
+
+      if (cart.length === 0) {
+        alert("Your cart is empty. Add something soft first 💗");
+        return;
+      }
+
+      // Simulate success message
+      orderMessage.classList.add("show");
+
+      // Clear cart after placing order
+      cart = [];
+      updateCartUI();
+
+      // Reset all product buttons
+      document.querySelectorAll(".product-card").forEach(card => {
+        const addBtn = card.querySelector(".add-btn");
+        const goCartBtn = card.querySelector(".go-cart");
+
+        addBtn.classList.remove("added");
+        addBtn.innerText = "Add to Cart";
+        goCartBtn.classList.remove("show");
+      });
+
+      // Reset form after order
+      document.getElementById("checkoutForm").reset();
+    }
+  </script>
+
+  <!-- Responsive helper for about grid -->
+  <style>
+    @media (max-width: 950px) {
+      .why-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+
+</body>
+</html>
